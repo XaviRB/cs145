@@ -1,0 +1,48 @@
+Lab 4
+
+Stacks and Queues are sequential containers with very few operations.  Formally,
+only add and remove are necessary, but most implementations offer a couple of
+convince routines like peek and empty.
+
+Your assignment is to implement both Stack and Queue.  You are free and
+encouraged to use your Linked List implementation from lab-3 or proj-3.  There
+are skeleton implementations of both Stack and Queue in the my directory of this
+lab.
+
+There is a unit test for Stack, called StackTest.java, and an empty unit test
+for Queue, called QueueTest.java.  You must implement QueueTest.java.  The test
+should be sufficient to ensure that every line of code in Queue is executed by
+at least one test case in QueueTest.java.
+
+You might want to review the README file from lab-3.  JUnit will run multiple
+unit tests.  Each test class is passed to the test framework with the -c
+option.  For example, running both StackTest and QueueTest could look like this:
+
+  $java -jar $JAR -cp . -c QueueTest -c StackTest
+
+
+Assignment
+
+ 1) Implement my/Stack.java
+   a) define any necessary data (hint: use your Linked List).
+   b) implement the Stack's constructor
+   c) implement the four methods on stack
+   
+ 2) Implement test functions in QueueTest so that you can be confident that
+    your eventual implementation of Queue works.  
+ 
+ 3) Implement my/Queue.java
+   a) define any necessary data
+   b) implement the Stack's constructor
+   c) implement the four methods on stack
+
+Gradeing
+
+ 1) Do not modify StackTest.java
+ 2) Do not change the method names, the return types, or the parameters for the
+    methods in my/Queue.java and my/Stack.java
+ 3) All of the tests in StackTest must run without error
+ 4) The tests in QueueTest must exercise every line of code in my/Queue.java
+ 5) The code should be reasonably documented and easy to understand
+
+

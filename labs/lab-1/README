@@ -1,0 +1,108 @@
+Lab 1
+
+The purpose of this lab assignment is to demonstrate using basic command line
+tools like ssh, git, and an editor of your choice; to practice compiling and
+running Java programs using the command line; and to read, interpret, and fix
+compilation errors.
+
+
+Before you get too far into this assignment, I strongly suggest reading the
+survival guide that CS Support has kindly put together:
+
+  https://gitlab.cs.wwu.edu/cs-support/public/-/wikis/home/survival_guide/CS_Technical_Survival_Guide
+
+
+The expectation is that you will work remotely on the department's lab machines
+via ssh.  If you have not already remotely accessed the lab machines, your TA
+can help you with this process.
+
+
+We will be using git for both distributing assignments and submitting solutions.
+Git is the de facto standard distributed source control system and it is used by
+most professional developers.  It is a very sophisticated tool, but we will only
+be using a few of its features.  Your TA will walk you through forking project,
+cloning projects, committing, and uploading changes.
+
+Your git repository or repo should be a directory named csci145, but you could
+have renamed it.  Within that directory is a directory named lab-1 that contains
+ten Java programs.  However, there is at least one error in each of these files.
+Your job is to fix all of the errors.  Don't worry, they can all be fixed with a
+change to just one line of code.
+
+Start with program P01_Hello1.java.  Use the java compiler to try to compile the
+file.  It should look something like this:
+
+  $ javac P01_Hello1.java 
+  P01_Hello1.java:10: error: ';' expected
+          System.out.println("Hello, CS145!")
+                                             ^
+  1 error
+  $
+
+There are a couple of notes about the command line interaction shown above.
+First, the dollar sign ($) is the prompt.  The prompt is customizable, so I
+don't know what you prompt looks like.  It could be just a dollar sign as I have
+shown, or it could list the name of the shell like bash-1.14$.  Most prompts end
+with a dollar sign, but this is just a convention.  
+
+Second, there isn't a good way to show what is printed by the system and what is
+typed in by the user.  In the case of the sample above, I typed in java
+P01_Hello01.java.  The rest was printed by the java compiler (javac) or the
+system.
+
+This is actually a pretty good error message.  It basically tells you what the
+error is, where it is, and what you need to do to fix it.    If only it were
+always like that.
+
+Fix this error and commit your changes to the repo.  There is a subtitle, but
+important step here.  Each commit includes a commit message.  The message will
+be attached to the committed change through the lifetime of the repo.  It is
+your way of telling another developer why you made the change to the source
+code.  Git will show what was changed, but it can't know why.  What should we
+say about this change?  Things like 'Fixed a compiler error' are uninformative.
+How about this:
+
+  $ git commit -m 'Java uses the semicolon (;) as a statement terminator.'
+
+That might be a little verbose, but it is more informative than 'fixed stuff'
+or, even worse, 'committing changes.'
+
+Here is the subtitle bit.  Commit messages document why you made the changes
+that you made.  They do not document what the program is supposed to do, how the
+program is organized, or why a particular algorithm was used.  That is what
+source code comments are for or, maybe, a README file.  Similarly, source code
+comments are not for documenting changes.
+
+
+What should you turn in?  This is a trick question.  Your commits are the
+submission.  However, they are only on your clone of the repository.  You still
+need to upload your changes to gitlab and, ultimately, to the teacher and the
+TAs so we can grade it.  This is done with the following command:
+
+  $ git push origin master
+
+or just
+
+  $ git push
+
+The first command is a little more precise.  I have to confess, I use the
+simpler one most of the time.
+
+The push copies all of your commits to gitlab---the origin of the code.  At this
+point, you should be able to see your changes on the department's getlab
+server.  If you don't see your changes, ask your TA for help.
+
+
+I expect there to be one or more commits for each exercise.  That is, there
+should be at least ten commits for this lab assignment.  Basically, commit early
+and commit often.  The push is only needed when you are done.  Well, it doesn't
+hurt to push after each commit, but it is technically only needed at the end.
+
+
+Grading is based on the following:
+
+ All of the programs should compile and work.
+ The errors are fixed with reasonable changes.
+   (I'm looking for one-line fixes.)
+ Multiple commits with a descriptive commit messages.
+

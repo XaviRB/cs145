@@ -1,0 +1,164 @@
+Proj 3
+
+This program adjusts the location of the centroids to be the mean location of
+the points in the first table with the matching label.  The input and output
+format is the same as that of proj-2, but where proj-2 changed the label of the
+points in the first table, this program moves centroids to the mid-point of the
+points with the matching label.  Consider the following input:
+
+  2
+  3
+  red 0.0 0.5
+  green 1.0 1.0
+  green 1.0 0.5
+  2
+  red 0.0 0.0
+  green 1.0 1.0
+
+This is answer1 from proj-2.  The mid-point of the red points or, in this case,
+the red point is (0.0, 0.5).  The mid-point of the green points is (1.0, 0.75).
+The correct output should be this:
+
+  2
+  3
+  red 0.0 0.5
+  green 1.0 1.0
+  green 1.0 0.5
+  2
+  red 0.0 0.5
+  green 1.0 0.75
+
+The mid-point of a collection of points is the mean value of each coordinate.
+Considering the green points from the example above, the first coordinate is 1.0
+which is the mean of 1.0 and 1.0.  The mean of 1.0 and 0.5 is 0.75.  So the
+mid-point is (1.0, 0.75).
+
+Computing means on a computer is the source of much frustration and angst.
+There is a beautiful but rather complicated method in Donald Knuth's "Art of
+Computer Programming."  While interesting, for our purposes it is sufficient to
+simply divide the sum of each coordinate by the number of points.  That is for
+dimension d:
+                 Σ(p.coord[d])
+   c.coord[d] =  -------------   for all p such that p.label = c.label
+                     |p|
+
+There is one very important restriction on this assignment: You may not use
+arrays of any kind with the exception of the argument to main.  The only
+sequential container available is the linked list implementation that you wrote
+in lab-3 or improved upon from lab-3.
+
+You can use the public symbols in the public class LinkedList by putting the
+file in this directory, adding it to the git project, and using the full name of
+the symbols in your code.  For example, your proj-3 directory might look like
+this:
+
+  $ls
+  LinkedList.java    README    Recenter.java
+
+You could refer to the symbol List<T> like this from within Recenter.java:
+
+  import java.util.Scanner;
+  
+  public class Recenter {
+    public static void main(String[] arg) {
+       LinkedList.List<Double> coords = new LinkedList.Link<Double>();
+       ...
+    }
+  }
+
+Well, that is tedious.  Let's make a slight modification to LinkedList and put
+it in a package called "my".
+
+Larger Java programs are divided into packages.  The standard Java libraries are
+organized in packages and these packages nest exactly the same way as
+directories nest.  In fact, Java uses directories to organize packages.  That
+is, the class Scanner is in a file named Scanner.java which is in a directory
+called "util" and that directory is in a directory called "java".  Notice the
+"import java.util.Scanner;" at the beginning of the Recenter.java file.  
+
+For our purposes, we need to create a directory named "my" and move
+LinkedList.java into that directory:
+
+  $mkdir my
+  $mv LinkedList.java my
+  $ls
+  my      README     Recenter.java
+
+However, we need to tell LinkedList.java that it is now inside the package named
+"my":
+
+  package my;
+  public class LinkedList {
+    ...
+
+Except, in a way, we've made the problem with using LinkedList worse.  We now
+have to add "my" to the beginning of each symbol:
+
+  import java.util.Scanner;
+  
+  public class Recenter {
+    public static void main(String[] arg) {
+       my.LinkedList.List<Double> coords = new my.LinkedList.Link<Double>();
+       ...
+    }
+  }
+
+Except, we can now import all of the static symbols in LinkedList into the
+Recenter namespace:
+
+  import java.util.Scanner;
+  import static my.LinkedList.*;
+  
+  public class Recenter {
+    public static void main(String[] arg) {
+       List<Double> coords = new Link<Double>();
+       ...
+    }
+  }
+
+Note that using packages depends heavily on the directory from which javac is
+used.  If you change to a different directory and try to compile Recenter.java,
+you will get an error: the compiler doesn't know how to find my.LinkedList.java.
+
+
+Here are the rules:
+
+  You must implement any additional functions that are necessary to keep the
+    code readable.  The TAs and I are the arbiters of readability.  Favor
+    relatively short, well named functions that do just one thing.  Hint: if you
+    have three nested loops, something is probably wrong.  
+
+  You must document the code.  Do not translate Java into English.  Explain why
+    you implemented it the way that you did.  DO NOT use in-line comments.
+
+  You may not use any Object Oriented features of Java aside from those used to
+    implement LinkedList.  For example, no non-static methods, no interfaces,
+    and no inheritance.
+
+  You may not use breaks outside of a switch, continues, gotos, or arbitrary
+    early returns.
+
+  Your code must compile without errors or warnings.  This includes the note
+    about unchecked or unsafe operations.  You might just include the -Xlint
+    option each time you compile.
+
+
+
+There are five sample files and expected output.  An easy test is to do a text
+comparison between your program's output and the expected output using the diff
+program.  If the two files match, diff produces no output.  For example:
+
+  $ cat sample1 | java Label | diff answer1 -
+
+Note that diff is doing a text comparison.  It is very sensitive to extra spaces
+and different precision in the output.  That is 0.5 and 0.50 are textually
+different.
+
+If you would like more sample input, you can use the Table.java program from
+proj-2.  
+
+If you would like more background on proj-2 and proj-3, these two programs
+implement the k-means clustering algorithm.  There is more detail and an
+animation on the wikipedia page:
+
+   https://en.wikipedia.org/wiki/K-means_clustering

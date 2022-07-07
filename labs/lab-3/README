@@ -1,0 +1,135 @@
+Lab 3
+
+Linked Lists
+
+We have developed a number of linked list implementations with various
+operations.  Your assignment is to implement a linked with the following
+operations: append, prepend, remove, next, at, item, empty, and length.
+Additionally, you will have to implement the constructor for the generic List<T>
+type.  Further documentation is provided in the file LinkedList.java
+
+There is no function main in LinkedList.java.  Your implementation will be
+tested with a testing framework called JUnit.  This is a tool used extensively
+in industry.  The bulk of the framework is in a jar-file:
+
+  /home/clausoa/lib/junit-platform-console-standalone-1.7.0.jar
+
+You will need to tell the compiler where to find this file when you compile
+ListTest.java.  There are several ways to do this.  Let's start with the verbose
+way:
+
+  $ javac -cp .:/home/clausoa/lib/junit-platform-console-standalone-1.7.0.jar ListTest.java
+
+Wow, that was long.  The -cp option to the compiler is the class-path.  This is
+where the compiler looks for code that is outside the file or files being
+compiled.  The notation above tells the compiler to look in the current
+directory (.) and in the jar-file in my lib directory.  Note, a jar-file is a
+fancy zip file.  Basically, it is just a compressed archive with some
+annotations.
+
+It is really common to set the class-path with Java.  Sometime the class-path is
+several lines long.  If we don't give the -cp option to the compiler it will
+look for an environment variable named CLASSPATH.  Let's use this environment
+variable to make compilation easier:
+
+  $ CLASSPATH=.:/home/clausoa/lib/junit-platform-console-standalone-1.7.0.jar
+  $ export CLASSPATH
+  $ javac ListTest.java
+
+There are a couple of things to note.  The assignment to CLASSPATH only lasts
+until you logout.  The next time you login, you will have to set the CLASSPATH
+again.
+
+The export command tells the bash---the command interpreter---to let the
+compiler see CLASSPATH.  Without the export, bash keeps the variable private.
+As it turns out, bash is its own programming environment.  
+
+JUnit is designed to integrate with a build system.  In a professional
+environment, test cases are executed regularly.  Unit-test, where JUnit gets the
+unit, are typically run after each successful build of the program.  We are
+going to run JUnit ourselves and it is a bit verbose:
+
+  $ java -ea -jar /home/clausoa/lib/junit-platform-console-standalone-1.7.0.jar -cp . -c ListTest
+  ...
+
+Okay, this is getting out of hand.  Let's use environment variables again to
+make this easier.
+
+  $ JAR=/home/clausoa/lib/junit-platform-console-standalone-1.7.0.jar
+  $ java -ea -jar $JAR -cp . -c ListTest
+  ...
+
+Notice that we didn't export JAR.  We used it directly from bash with the
+dollar-sign notation.
+
+
+There are seven test cases and they all fail.  JUnit will tell you where they
+fail.  Consider the following output:
+
+  $ java -ea -jar $JAR -cp . -c ListTest
+  
+  Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+  
+  .
+  +-- JUnit Jupiter [OK]
+  | '-- ListTest [OK]
+  |   +-- emptyList() [X] expected: <true> but was: <false>
+  |   +-- append() [X] expected: not <null>
+  |   +-- advance() [X] expected: not <null>
+  |   +-- length() [X] expected: <1> but was: <0>
+  |   +-- remove() [X] expected: <true> but was: <false>
+  |   +-- prepend() [X] expected: not <null>
+  |   '-- empty() [X] expected: <true> but was: <false>
+  '-- JUnit Vintage [OK]
+  
+  Failures (7):
+    JUnit Jupiter:ListTest:emptyList()
+      MethodSource [className = 'ListTest', methodName = 'emptyList', methodPa...
+    => org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+       org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+       org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+       org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+       org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+       org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+       ListTest.emptyList(ListTest.java:22)
+       java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native ...
+       java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMe...
+       java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Dele...
+       java.base/java.lang.reflect.Method.invoke(Method.java:566)
+       [...]
+
+Wow, that is a lot of output and I have truncated it to just the first failure.
+Notice about halfway down the failures it says this:
+
+  ListTest.emptyList(ListTest.java:22)
+
+This tells us that the testing assertion that failed is on line 22 of
+ListTest.java.  That line is this:
+
+  assertEquals(true, LinkedList.empty(list));
+
+You can read the rest of the test case, which is has the name "emptyList".  The
+error is that empty should be true, but is instead false.  It looks like there
+is work to be done.
+
+
+Assignment
+
+Implement a linked list with the functions defined in LinkedList.java.  This
+includes the following:
+
+ 1) Finish defining class List
+ 2) Define any additional classes you need
+ 3) Implement class List's constructor
+ 4) Implement all of the functions in class LinkedList
+
+Grading
+
+ 1) Do not modify ListTest.java
+ 2) LinkedList.java should compile without errors, warnings, or hints 
+ 3) All of the tests in ListTest run without error
+ 3) Each function is well formatted, easy to read, and documented
+ 4) Use the other functions when practicable
+ 
+ 
+

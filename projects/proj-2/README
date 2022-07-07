@@ -1,0 +1,117 @@
+
+Finish implementing the Label program.
+
+The input format for Label is an extension to the format of proj-1.  The first
+line is the number of dimensions for each point.  The following lines represent
+two sets of points.  Each set starts with the number of points within that set
+followed by the point data.  Each point is labeled with a single word followed
+by the real-valued coordinates.  Consider the following input:
+
+  2 
+  3
+  red   0.0 0.5
+  red   1.0 1.0
+  red   1.0 0.5
+  2     
+  red   0.0 0.0
+  green 1.0 1.1
+
+The points are all two-dimensional.  The first set is three points all of which
+are labeled red.  The second set is only two points labeled red and green.
+
+The labels for the second set of points are always distinct.  That is, no two
+points in the second set will have the same label.
+
+
+The points in the first set can be labeled arbitrarily.  The purpose of this
+program is to relabel the points in the first set to match the label of the
+closest point in the second set.   Given the above example, the correct output
+is this:
+
+  2
+  3
+  red 0.0 0.5
+  green 1.0 1.0
+  green 1.0 0.5
+  2
+  red 0.0 0.0
+  green 1.0 1.1
+
+
+To help you visualize what is going on, I have written a program that takes this
+format as its input and produces a PNG file with the points plotted in the color
+that matches their label.  It will only read red, green, and blue.
+
+The following will create a file called img.png from the output of Label.
+
+  $ cat sample1 | java Label | /home/clausoa/bin/picture > img.png
+
+Great, but how can you view it.  There are two options.  The first is to copy
+the img file to your computer.  This is how you can do it from powershell on
+Windows:
+
+  PS> scp -P 922 your-user-id@labs.cs.wwu.edu:path/to/img.png .
+
+This should copy the img file to your computer.
+
+Alternatively, all students have a web hosting on the lab machines.  There are a
+couple of steps to get this working.  First give the webserver permission to use
+your studentweb directory.  From the labs do the following:
+
+  $ chmod o+x /web/students/$(whoami)
+
+Copy img.png to your studentweb directory:
+
+  $ cp img.png /web/students/$(whoami)/img.png
+
+Now give the webserver permission to read this file:
+
+  $ chmod o+x /web/students/$(whoami)/img.png
+
+From your local machine, point a web browser at
+
+  https://studentweb.cs.wwu.edu/~your-user-id/img.png.
+
+The tilde (~) is necessary.  If I were a student, the URL for my studentweb
+directory would be
+
+  https://studentweb.cs.wwu.edu/~clausoa/
+
+
+
+Here are the rules:
+
+  You must implement any additional functions that are necessary to keep the
+    code readable.  The TAs and I are the arbiters of readability.  Favor
+    relatively short, well named functions that do just one thing.  Hint: if you
+    have three nested loops, something is probably wrong.  
+
+  You must document the code.  Do not translate Java into English.  Explain why
+    you implemented it the way that you did.  DO NOT use in-line comments.
+
+  You may not use any Object Oriented features of Java.  For example, no
+    non-static methods, no interfaces, and no inheritance.
+
+  You may not use breaks outside of a switch, continues, gotos, or arbitrary
+    early returns.
+
+  Your code must compile without errors or warnings.  
+
+  
+
+There are five sample files and expected output.  An easy test is to do a text
+comparison between your program's output and the expected output using the diff
+program.  If the two files match, diff produces no output.  For example:
+
+  $ cat sample1 | java Label | diff answer1 -
+
+Note that diff is doing a text comparison.  It is very sensitive to extra spaces
+and different precision in the output.  That is 0.5 and 0.50 are textually
+different.
+
+If you would like more sample input, I have provided Table.java.  This is a
+modification of the earlier exercise.
+
+  $ java Table | java Label > output
+
+

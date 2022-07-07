@@ -1,0 +1,78 @@
+Lab 2
+
+Recursive functions
+
+Mathematicians often define functions in terms of themselves. Factorial is a
+classic example.  A mathematician would write
+
+            / 1                 when n = 0;
+  fact(n) = |
+            \ n × f act(n - 1)  otherwise.
+
+This expression means that fact(0)=1, fact(1)=1 x fact(0), fact(2)=2 x fact(1),
+and so on.  The folks over in Bond Hall write this on their chalkboards and move
+on to other things.  This is fine for the math department, but we are interested
+in computing answers.
+
+
+    To do this, we can turn the sequence around. We would keep a running
+product, p=1, and increment some i until it reaches n multiplying as we
+go. Something like this
+
+   public static int fact(int n) {
+     int p = 1;
+     for(int i = 1; i < n; i++) {
+       p = p * i;
+     }
+     return p;
+   }
+
+And this actually works quite well.  However, not all recursive functions are so
+easily converted to an iterative form like factorial.
+
+An alternative and more robust approach is recursive programming. We know that
+functions can call other functions. When functions call themselves, we call it
+recursive. The recursive form of factorial would look like this:
+
+   public static int fact(int n) {
+      if(n == 0)
+         return 1;
+      else
+         return n * fact(n - 1);
+   }
+
+(Editorial Note: This is one of the few times when I am happy with multiple
+returns in a function. We are really getting around the fact the Java's
+if-expression is clunky and awkward.  It only gets worse as we get more than
+just two cases in the recursive definition.)
+
+Did you notice how fact calls itself in the last line? How does this work? When
+a function is called, the Java virtual machine creates space for the function's
+local variables. This space is called a stack frame. In addition to space for
+parameters and local variables, there is a hidden reference to the calling
+function and its stack frame.  It is called the dynamic link.
+
+When fact calls itself, it creates a new stack frame for function call with a
+correctly initialized dynamic link. So when the 15th call to fact finishes, it
+returns its answer to the 14th call to fact. It is all quite elegant if you
+think about it. (Editorial Note: That should have been an editorial note.)
+
+
+Assignment
+
+There are five Java programs that are missing one recursive function.  The first
+problem is pretty easy: factorial.  The last example is difficult: Ackermann's
+function.  I strongly suggest implementing these function in this order:
+
+   1. Factorial
+   2. Fibonacci
+   3. GCD
+   4. BinarySearch
+   5. Ackermann
+
+
+Grading
+
+ All of the programs should compile with neither errors nor warnings.
+ The missing functions are all implemented recursively.
+ Multiple commits with a descriptive commit messages.

@@ -1,0 +1,112 @@
+import java.util.Scanner;
+import static my.LinkedList.*;
+
+
+public class Recenter {
+
+	// Main takes the sample using the scanner
+        //and takes the dim which is the dimensions of
+        //the sample with that it prints out the dimension
+        //and excutes label, writepoints(points) writepoints(centriods)
+	public static void main(String[] args){
+
+		Scanner input = new Scanner(System.in);
+
+		int dim = input.nextInt();
+
+		List<Point> point = readPoints(input, dim);
+		List<Point> centriods = readPoints(input,dim);
+
+		//label(points, centriods);
+
+		//System.out.println(dim);
+		//writePoints(points);
+		//writePoints(centroids);
+
+	}
+	//point class
+	//defined List as a double and used coord.
+	public static class Point{
+		String label;
+		List<Double>  coord;
+	}
+	//read a point
+	//reads a single point form input with dim demensions
+	public static Point readPoint(Scanner input, int dim){
+		Point point = new Point();
+		point.coord = new List<Double>();
+		point.label = input.next();
+
+		for(int i = 0; i < dim; i++){
+			append(point.coord, input.nextDouble());
+		}
+		return point;
+	}
+	//read the points
+	//
+	public static List<Point> readPoints(Scanner input, int dim){
+		List<Point> point = new List<Point>();
+		int num = input.nextInt();
+
+		for(int i = 0; i < num; i++) {
+			append(point, readPoint(input, dim));
+		}
+		return point;
+	}
+	//label method
+	//points	The points in the first set whos labels will be changed
+	//centriods	the second set of points
+	//
+	//relabel the points to match the label of the closest centroids
+	public static void label(List<Point> points, List<Point> centroids) {
+		double minDist = POSITIVE_INFINITY;
+		double dist = 0;
+
+		for(int p = 0; p < length(centroids); p++){
+			for(int c = 0; c < length(centroids); c++){
+
+				dist = formula(at(points, p), at(centroids, c));
+
+				if (dist < minDist) {
+					minDist = dist;
+					at(points, p).label = at(centroids, c).label;
+				}
+			}
+		}
+	}
+	//wirtePoint a point
+	//writes a single point to system.out as one line
+	//
+	//This prints out the label and the coord as a single line
+	//also had some blank space to clean up the code.
+	public static void writePoint(Point p){
+		System.out.println(p.label);
+
+		for(int j = 0; j < length(p.coord); j++){
+			System.out.println(" "+ at(p.coord, j));
+		}
+		System.out.println("");
+	}
+	//writepoints of a point
+	//
+	//This takes write point and actualy goes down
+	//the linked list of how ever many points there may
+	//be and prints it out.
+	public static void writePoints(List<Point> points){
+		System.out.println(length(points));
+
+		for(int i = 0; i < length(points); i++){
+			writePoint(at(points, i));
+		}
+	}
+	//distance formula
+	//
+	public static double formula(Point point, Point centroids){
+		double dist = 0;
+
+		for(int col = 0; col < length(point.coord); col++){
+			dist = dist + Math.pow(at(centroids.coord, col) - at(point.coord, col), 2);
+		}
+		return Math.sqrt(dist);
+	}
+}

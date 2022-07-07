@@ -1,0 +1,41 @@
+
+Finish implementing the program Closest.  It should read a table of points from
+System.in and print the distance between the two points that are the closest
+together.  The complicating factor here is that the points are in an arbitrary
+number of dimensions.
+
+Here are the rules:
+
+  You must implement at least one additional function.
+
+  You must document the code.  Note that some of the functions have already been
+     documented, but other have not.  Any functions you add must be documented.
+     The comments should explain the code.  Do not explain the language.  
+
+  Your code must be easy to understand.  This means good function and variable
+     names.  You cannot use non-switch break statements, continue statements, or
+     arbitrary returns.
+
+  It must compile without errors or warnings.
+
+
+There are five sample files.  
+  
+  $ cat sample1 | java Closest 
+  0.5
+
+  $ cat sample2 | java Closest
+  0.10152899417451168
+
+  $ cat sample3 | java Closest
+  4.4320605273595604E-4
+
+  $ cat sample4 | java Closest
+  0.0010413730277685218
+
+  $ cat sample5 | java Closest
+  0.023098119349816305
+
+Please note that your output does not have to be exactly the same.  There may be
+slight differences in the values.  These differences should be many places past
+the decimal point.  
