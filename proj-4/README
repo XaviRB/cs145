@@ -1,0 +1,141 @@
+Proj-4
+
+SEARCHING
+
+The purpose of this program is to find the path through a randomly generated
+maze.  There are a number of ways to solve problems like these.  The general
+approach is to search through the maze for the correct path.
+
+A path is a list of positions with one end of the list at the start and the
+other end of the list at the finish.  The starting-point is know, so that is
+easy.  Finding the finish is the difficult part.
+
+We can start with an list that contains just the starting point.  Put that into
+a container as work to be done.  Then, remove a path from the container.  If the
+path ends at the finish, we're done.  If it doesn't, we have some work to do.
+
+This is actually pretty easy.  The end-point of the path is some position in the
+maze.  Ask the maze for the neighbors of that point.  For each of these
+neighbors that isn't already part of the path, make a copy of the path with the
+neighbor added to the end.  Put these new paths into the container as work to be
+done.
+
+There are really two ways to end the search.  Ether the finish is found and the
+search succeeds or the container is empty and there is no valid path from to the
+finish.  You must handle both of these cases.
+
+Different containers produce different search strategies.  In our case, we have
+queues and stacks.  When the container is a stack, the search is depth-first.
+That is, the longest path is expanded first.  This is the same search as putting
+your left hand on the wall of the maze.  If you don't know this trick, check out
+this youtube video.
+
+  https://www.youtube.com/watch?v=eQYLL7XnM-4
+
+If you watched the video, there was a comment they made about Kitty.  She will
+find a path, but it might not be the shortest path.
+
+Replacing the stack with a queue changes the search to breadth-first.  That is,
+the shortest paths are extended first.  This is more work, but it find the
+shortest path to the finish.
+
+INTERFACES
+
+Your Stack and Queue implementations from lab-4 have the same methods.  The two
+types are practically interchangeable.  We can use an OO feature of Java to
+programmatically change the type of the container.  We do this through a common
+interface.
+
+In the my package is file called Container.java.  Notice that Container isn't a
+public class, but a public interface.  Interfaces define a collection of methods
+that an implementing class must define.  Actually, you have already defined
+these methods.  All you need to do is tell Java that your Stack and Queue
+classes implement the Container interface.  For example, to tell Java that Stack
+implements the Container interface, change the class declaration to this:
+
+  public class Stack<T>
+      implements Container<T> {
+      ...
+
+Now we can pass a Stack when a function expects a Container.  For example take
+a look at the solve function in Solve.java.  It expects a Container of
+Maze.Positions.  Since Stack implements Container, we can pass a Stack of
+Maze.Positions as the third argument to solve.
+
+Since Container is just an interface, you can't actually create a Container per
+say.  It would be like having a sandwich.  Sandwich is an abstract concept.  You
+can have a PBJ or a baloney sandwich, but not an abstract sandwich.  This is the
+same way you can have a Stack of Integers, but not a Container of Integers.
+
+LOGISTICS
+
+I've written most of the program for you.  This includes the Maze class, the 
+my.Container interface, and the bulk of the Solve program.  There is still some
+work left to do.
+
+1) My Maze implementation depends on your LinkedList from lab-3.  You are free
+to add functions to LinkedList, but I need the function-based implementation
+from the lab.  That is, I'm expecting append(list, item) not list.append(item).
+Move your LinkedList implementation into the my package.
+
+2) You are going to need a way to copy a list for the search.  We don't
+currently have that functionality.  Create a way to copy a linked list.
+
+3) Add your Stack and Queue implementations from lab-4 to the my package and
+adjust their declarations so they implement Container.
+
+4) Implement the loop in solve.
+
+5) While you search through the maze, write the points that you have searched to
+the log file.  Since there is a toString method for Maze.Position, this is
+simply the following:
+
+   log.println(item(path));
+   
+
+Here are the rules:
+
+  You may not use arrays of any kind with the exception of the one argument to
+    main (i.e., public static void main(String[] args) {...} ).
+
+  You must implement any additional functions that are necessary to keep the
+    code readable.  The TAs and I are the arbiters of readability.  Favor
+    relatively short, well named functions that do just one thing.  Hint: if you
+    have three nested loops, something is probably wrong.  
+
+  You must document the code.  Do not translate Java into English.  Explain why
+    you implemented it the way that you did.  DO NOT use in-line comments.
+
+  You are free to use the Object Oriented features of Java that we have talked
+    about in class, projects, labs, and in this README.  You may NOT use
+    inheritance beyond that required by Java (e.g., all classes extend Object).  
+
+  You may not use breaks outside of a switch, continues, gotos, or arbitrary
+    early returns.
+
+  Your code must compile without errors or warnings.  This includes the note
+    about unchecked or unsafe operations.  You might just include the -Xlint
+    option each time you compile.
+
+
+The Search program takes two command-line arguments.  First, you must provide
+either -q or -s to indicate that you want to use a queue or a stack for the
+search.  The second argument is the name of the maze file.  The following, for
+example, will search maze1 using a queue:
+
+  $java Search -q maze1
+
+The output are files named maze1.path and maze1.log.  
+
+There are four sample mazes.  At least one has a solution and at least one does
+not.  The following program will create a picture of the maze:
+
+  $/home/clausoa/bin/mazepicture maze1 > maze1.png
+
+It will look for a maze1.path and maze1.log.  If it finds them, it will add a
+green line for the path and mark the positions searched in yellow.  If it
+doesn't find the other files, it will just make a picture of the maze.
+
+Do you notice a difference between bread-first and depth-first searching?  Run
+the search program with -q and -s and look at the difference between the
+positions searched.  
